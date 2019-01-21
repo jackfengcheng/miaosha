@@ -43,7 +43,11 @@
             <artifactId>druid</artifactId>
             <version>1.0.5</version>
         </dependency>
-
+        <!-- springBoot 的启动器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <!-- reids-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
