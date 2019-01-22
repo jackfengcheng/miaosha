@@ -11,4 +11,6 @@ public interface UserService {
     public User getById(Long id);
 
     public boolean login( HttpServletResponse response, LoginVo loginVo);
+
+    public User getByToken(HttpServletResponse response,String token);
 }

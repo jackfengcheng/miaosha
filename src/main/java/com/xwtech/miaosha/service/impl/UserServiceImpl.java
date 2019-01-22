@@ -14,6 +14,7 @@ import com.xwtech.miaosha.util.MD5Util;
 import com.xwtech.miaosha.util.UUIDUtil;
 import com.xwtech.miaosha.vo.LoginVo;
 import groovy.util.logging.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,6 +27,7 @@ import javax.persistence.criteria.Root;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,6 +80,26 @@ public class UserServiceImpl implements UserService {
         if(!calsPassWord.equals(dbPassword)){
             throw new GlobalException( CodeMsg.PASSWORD_ERROR);
          }
+         //设置token
+        addCookie(response,user);
+        return true;
+    }
+
+    @Override
+    public User getByToken(HttpServletResponse response,String token) {
+        if(StringUtils.isEmpty(token)){
+            return null;
+        }
+        User user = (User)this.redisTemplate.boundHashOps(RedisKey.TOKEN).get(token);
+        //刷新ciikie
+        if(user != null){
+            addCookie(response,user);
+        }
+        return user;
+    }
+
+
+    private void addCookie(HttpServletResponse response,User user){
         String token = UUIDUtil.uuid();
         redisTemplate.boundHashOps(RedisKey.TOKEN).put(token,user);
         redisTemplate.expire(token,30,TimeUnit.MINUTES);
@@ -85,6 +107,5 @@ public class UserServiceImpl implements UserService {
         cookie.setMaxAge(108000);
         cookie.setPath("/");
         response.addCookie(cookie);
-        return true;
     }
 }
