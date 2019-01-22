@@ -24,6 +24,11 @@ public class CodeMsg {
 		this.code = code;
 		this.msg = msg;
 	}
+	public CodeMsg fillArgs(Object... args) {
+		int code = this.code;
+		String message = String.format(this.msg, args);
+		return new CodeMsg(code, message);
+	}
 	
 	public int getCode() {
 		return code;

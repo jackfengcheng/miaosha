@@ -1,18 +1,40 @@
 package com.xwtech.miaosha.damain;
 
 
+import com.xwtech.miaosha.validator.IsMobile;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "user")
 public class User implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    @NotNull
+    @Column(name = "mobile")
+    private Long mobile;
+    @NotNull
+    @Column(name = "nickname")
     private String nickname;
+    @Length(min = 32)
+    @Column(name = "password")
     private String password;
+    @Column(name = "salt")
     private String salt;
+    @Column(name = "head")
     private String head;
-    private Date register_date;
-    private Date last_login_date;
-    private Integer login_count;
+    @Column(name = "registerDate")
+    private Date registerDate;
+    @Column(name = "lastLoginDate")
+    private Date lastLoginDate;
+    @Column(name = "loginCount")
+    private Integer loginCount;
 
     public Integer getId() {
         return id;
@@ -20,6 +42,14 @@ public class User implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Long getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
     }
 
     public String getNickname() {
@@ -54,27 +84,42 @@ public class User implements Serializable{
         this.head = head;
     }
 
-    public Date getRegister_date() {
-        return register_date;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegister_date(Date register_date) {
-        this.register_date = register_date;
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
-    public Date getLast_login_date() {
-        return last_login_date;
+    public Date getLastLoginDate() {
+        return lastLoginDate;
     }
 
-    public void setLast_login_date(Date last_login_date) {
-        this.last_login_date = last_login_date;
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
     }
 
-    public Integer getLogin_count() {
-        return login_count;
+    public Integer getLoginCount() {
+        return loginCount;
     }
 
-    public void setLogin_count(Integer login_count) {
-        this.login_count = login_count;
+    public void setLoginCount(Integer loginCount) {
+        this.loginCount = loginCount;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", mobile=" + mobile +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", head='" + head + '\'' +
+                ", registerDate=" + registerDate +
+                ", lastLoginDate=" + lastLoginDate +
+                ", loginCount=" + loginCount +
+                '}';
     }
 }

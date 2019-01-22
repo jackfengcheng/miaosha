@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -29,7 +31,7 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Response doLogin(LoginVo loginVo){
+    public Response doLogin(HttpServletResponse response,LoginVo loginVo){
         logger.info(loginVo.toString());
         String inputPass = loginVo.getPassword();
         String mobile = loginVo.getMobile();
@@ -43,11 +45,7 @@ public class LoginController {
             return Response.error(CodeMsg.MOBILE_ERROR);
         }
 
-        CodeMsg codeMsg = userService.login(loginVo);
-        if(codeMsg.getCode() == 0){
-            return Response.success(true);
-        }else {
-            return Response.error(codeMsg);
-        }
+        userService.login(response,loginVo);
+        return Response.success(true);
     }
 }

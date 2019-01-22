@@ -28,9 +28,9 @@ public class MD5Util {
         return dbPass;
     }
     public static void main(String[] args) {
-        String s = inputPassToFormPass("123456");
-        System.out.println(s);
-        String s1 = formPassToDbPass(s, salt);
+//        String s = inputPassToFormPass("123456");
+//        System.out.println(s);
+        String s1 = formPassToDbPass("c8210e78361a27157ac2dc309e6cabf8", salt);
         System.out.println(s1);
     }
 }
