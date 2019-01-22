@@ -9,7 +9,6 @@ import com.xwtech.miaosha.damain.User;
 import com.xwtech.miaosha.dao.UserRepository;
 import com.xwtech.miaosha.exception.GlobalException;
 import com.xwtech.miaosha.service.UserService;
-import com.xwtech.miaosha.util.CookieUtil;
 import com.xwtech.miaosha.util.MD5Util;
 import com.xwtech.miaosha.util.UUIDUtil;
 import com.xwtech.miaosha.vo.LoginVo;
@@ -25,7 +24,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.util.List;
@@ -81,7 +79,8 @@ public class UserServiceImpl implements UserService {
             throw new GlobalException( CodeMsg.PASSWORD_ERROR);
          }
          //设置token
-        addCookie(response,user);
+        String token = UUIDUtil.uuid();
+        addCookie(response,token,user);
         return true;
     }
 
@@ -93,14 +92,14 @@ public class UserServiceImpl implements UserService {
         User user = (User)this.redisTemplate.boundHashOps(RedisKey.TOKEN).get(token);
         //刷新ciikie
         if(user != null){
-            addCookie(response,user);
+            addCookie(response,token,user);
         }
         return user;
     }
 
 
-    private void addCookie(HttpServletResponse response,User user){
-        String token = UUIDUtil.uuid();
+    private void addCookie(HttpServletResponse response,String token,User user){
+
         redisTemplate.boundHashOps(RedisKey.TOKEN).put(token,user);
         redisTemplate.expire(token,30,TimeUnit.MINUTES);
         Cookie cookie = new Cookie(CookieKey.COOKIE_NAME_TOKEN,token);
