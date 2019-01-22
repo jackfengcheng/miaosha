@@ -25,4 +25,14 @@ public class GoodsServiceImpl implements GoodsService{
         Goods good = this.goodsRepository.findOne(goodsId);
         return good;
     }
+
+    //减少库存
+    @Override
+    public void reduceStock(Goods goods) {
+        Goods g= new Goods();
+        g.setId(goods.getId());
+        g.setGoodsStock(goods.getGoodsStock()-1);
+        g.setStockCount(goods.getStockCount() -1);
+        this.goodsRepository.save(g);
+    }
 }

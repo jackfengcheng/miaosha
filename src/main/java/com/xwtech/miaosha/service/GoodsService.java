@@ -10,4 +10,6 @@ public interface GoodsService {
     List<Goods> goodsList();
 
     Goods goodsById(Long goodsId);
+
+    void reduceStock(Goods goods);
 }
