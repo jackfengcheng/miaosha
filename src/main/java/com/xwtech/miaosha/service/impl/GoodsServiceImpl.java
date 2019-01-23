@@ -29,10 +29,10 @@ public class GoodsServiceImpl implements GoodsService{
     //减少库存
     @Override
     public void reduceStock(Goods goods) {
-        Goods g= new Goods();
-        g.setId(goods.getId());
-        g.setGoodsStock(goods.getGoodsStock()-1);
-        g.setStockCount(goods.getStockCount() -1);
-        this.goodsRepository.save(g);
+        goods.setId(goods.getId());
+        goods.setId(goods.getId());
+        goods.setGoodsStock(goods.getGoodsStock()-1);
+        goods.setStockCount(goods.getStockCount() -1);
+        this.goodsRepository.save(goods);
     }
 }

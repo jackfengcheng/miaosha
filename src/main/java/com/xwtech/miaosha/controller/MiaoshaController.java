@@ -41,12 +41,12 @@ public class MiaoshaController {
             model.addAttribute("errmsg", CodeMsg.MIAO_SHA_OVER.getCode());
             return "miaosha_fail";
         }
-//        //判断是否已经秒杀到了
-//        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
-//        if(order != null) {
-//            model.addAttribute("errmsg", CodeMsg.REPEATE_MIAOSHA.getMsg());
-//            return "miaosha_fail";
-//        }
+        //判断是否已经秒杀到了
+        OrderInfo order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
+        if(order != null) {
+            model.addAttribute("errmsg", CodeMsg.REPEATE_MIAOSHA.getMsg());
+            return "miaosha_fail";
+        }
         //减库存 下订单 写入秒杀订单
         OrderInfo orderInfo = miaoshaService.miaosha(user, goods);
 

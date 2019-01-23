@@ -7,7 +7,7 @@ import com.xwtech.miaosha.damain.User;
 
 public interface OrderService {
 
-    MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(Integer id, long goodsId);
+    OrderInfo getMiaoshaOrderByUserIdGoodsId(Integer id, long goodsId);
 
     OrderInfo createOrder(User user, Goods goods);
 }
