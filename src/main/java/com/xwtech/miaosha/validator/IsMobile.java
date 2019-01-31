@@ -13,6 +13,8 @@ public @interface IsMobile {
 
     String message() default "手机号码格式错误";
 
+    String code() default "";
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };

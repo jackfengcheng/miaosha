@@ -4,11 +4,10 @@ import com.xwtech.miaosha.damain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-public interface UserRepository extends JpaSpecificationExecutor<User>, JpaRepository<User,Long>,Repository<User,Long> {
+public interface UserRepository extends JpaSpecificationExecutor<User>, JpaRepository<User,Long> {
 
     @Query(value = "select * from user where nickname =?",nativeQuery = true)
     List<User> queryUserByName(String name);
