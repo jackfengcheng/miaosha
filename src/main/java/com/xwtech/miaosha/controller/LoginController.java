@@ -5,6 +5,7 @@ import com.xwtech.miaosha.base.Response;
 import com.xwtech.miaosha.service.UserService;
 import com.xwtech.miaosha.util.ValidatorUtil;
 import com.xwtech.miaosha.vo.LoginVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
