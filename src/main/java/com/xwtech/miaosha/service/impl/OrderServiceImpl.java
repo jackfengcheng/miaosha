@@ -1,13 +1,16 @@
 package com.xwtech.miaosha.service.impl;
 
 import com.xwtech.miaosha.damain.Goods;
-import com.xwtech.miaosha.damain.MiaoshaOrder;
 import com.xwtech.miaosha.damain.OrderInfo;
 import com.xwtech.miaosha.damain.User;
-import com.xwtech.miaosha.dao.GoodsRepository;
 import com.xwtech.miaosha.dao.OrderRepository;
 import com.xwtech.miaosha.service.OrderService;
+import com.xwtech.miaosha.vo.Pages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -67,4 +70,25 @@ public class OrderServiceImpl implements OrderService {
         OrderInfo orderInfo = this.orderRepository.save(ol);
         return orderInfo;
     }
+
+    @Override
+    public Pages getOrderList(int size, int page) {
+        Pages pages = new Pages();
+        final Specification spec = new Specification() {
+            @Override
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+                Predicate predicate = cb.equal(root.get("goodsName"), "三星mate10");
+                return predicate;
+            }
+        };
+        Sort sort = new Sort(Sort.Direction.DESC,"id");
+        Pageable pageable = new PageRequest(page,size,sort);
+        Page all = this.orderRepository.findAll(spec, pageable);
+        pages.setSize(all.getSize());
+        pages.setCount(all.getTotalPages());
+        pages.setData(all.getContent());
+        return pages;
+    }
+
+
 }
